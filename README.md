@@ -1,6 +1,6 @@
 <br>
 
-Latest
+Architecture: Recurrent Neural Networks &Rarr; Long Short-Term Memory
 
 <br>
 <br>
