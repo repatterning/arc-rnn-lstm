@@ -2,7 +2,6 @@
 import typing
 
 import pandas as pd
-import sklearn
 
 
 class Master(typing.NamedTuple):
