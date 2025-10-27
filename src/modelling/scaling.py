@@ -22,7 +22,7 @@ class Scaling:
 
         self.__features = arguments.get('scaling').get('features')
 
-    def __restructure(self, structure: pd.DataFrame, transforms: np.ndarray):
+    def __restructure(self, structure: pd.DataFrame, transforms: np.ndarray) -> pd.DataFrame:
         """
 
         :param structure: The dataframe the transforms apply to
