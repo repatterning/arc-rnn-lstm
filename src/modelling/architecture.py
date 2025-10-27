@@ -22,6 +22,7 @@ class Architecture:
         self.__epochs = self.__arguments.get('modelling').get('epochs')
         self.__batch_size = self.__arguments.get('modelling').get('batch_size')
 
+    # noinspection PyUnresolvedReferences
     def __model(self, x_tr: np.ndarray, y_tr: np.ndarray) -> tf.keras.models.Sequential:
         """
 
@@ -49,6 +50,7 @@ class Architecture:
 
         return architecture
 
+    # noinspection PyUnresolvedReferences
     def exc(self, intermediary: itr.Intermediary) -> tf.keras.models.Sequential:
         """
 
