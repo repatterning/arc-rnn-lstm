@@ -30,6 +30,8 @@ class Split:
 
     def __training(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
+        <b>Note:</b><br>
+        n_points_training = training.shape[0] - self.__arguments.get('n_sequence')<br><br>
 
         :param blob:
         :return:
