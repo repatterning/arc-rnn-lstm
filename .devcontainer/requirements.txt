@@ -1,6 +1,6 @@
 tensorflow[and-cuda]
 tensorflow-probability
-tf-keras
+keras
 dask[complete]>=2025.1
 dask-expr
 graphviz>=0.20.3
