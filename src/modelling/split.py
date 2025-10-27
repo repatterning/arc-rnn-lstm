@@ -18,7 +18,7 @@ class Split:
     def __init__(self, arguments: dict):
         """
 
-        :param arguments: Modelling arguments.
+        :param arguments: A set of arguments vis-à-vis calculation & storage objectives.
         """
 
         self.__arguments = arguments
