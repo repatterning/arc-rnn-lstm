@@ -29,10 +29,14 @@ class Sequencing:
 
         data = blob.copy().loc[:, self.__fields]
         matrix = data.values
+
+        # The indices of the target fields
         __indices = [data.columns.get_loc(k) for k in self.__targets]
 
+        # Denoting history-sequence length
         __limit = self.__n_sequence
 
+        # Hence
         x_matrix = []
         y_matrix = []
         for j in range(data.shape[0] - __limit):
