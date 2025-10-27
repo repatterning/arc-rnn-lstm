@@ -44,6 +44,19 @@ class Data:
 
         return block
 
+    def __set_missing(self, data: pd.DataFrame) -> pd.DataFrame:
+        """
+        Forward filling.  In contrast, the variational model inherently deals with missing data, hence
+                          it does not include this type of step.
+
+        :param data:
+        :return:
+        """
+
+        data['measure'] = data['measure'].ffill().values
+
+        return data
+
     def exc(self, listing: list[str]) -> pd.DataFrame:
         """
 
@@ -53,6 +66,7 @@ class Data:
 
         # The data
         data = self.__get_data(listing=listing)
+        data = self.__set_missing(data=data.copy())
 
         # Filter
         data = data.copy().loc[data['timestamp'] >= self.__as_from, :]
