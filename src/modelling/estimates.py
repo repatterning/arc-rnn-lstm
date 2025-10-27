@@ -1,4 +1,7 @@
 """Module estimates.py"""
+import tensorflow as tf
+
+import pandas as pd
 
 
 class Estimates:
@@ -6,8 +9,17 @@ class Estimates:
     Estimates
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, arguments: dict):
+        """
 
-    def exc(self):
-        pass
+        :param arguments: A set of arguments vis-à-vis calculation & storage objectives.
+        """
+
+        self.__arguments = arguments
+
+    def exc(self, model: tf.keras.src.models.Sequential):
+
+        history = pd.DataFrame(data=model.history.history)
+        history.info()
+
+
