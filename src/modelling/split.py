@@ -22,29 +22,30 @@ class Split:
         """
 
         self.__arguments = arguments
+        self.__n_exclude = self.__arguments.get('n_points_testing') + self.__arguments.get('n_sequence')
 
         self.__configurations = config.Config()
         self.__directories = src.functions.directories.Directories()
         self.__streams = src.functions.streams.Streams()
 
-    def __include(self, blob: pd.DataFrame) -> pd.DataFrame:
+    def __training(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param blob:
         :return:
         """
 
-        return blob.copy()[:-self.__arguments.get('testing')]
+        return blob.copy()[:-self.__n_exclude]
 
-    def __exclude(self, blob: pd.DataFrame) -> pd.DataFrame:
+    def __testing(self, blob: pd.DataFrame) -> pd.DataFrame:
         """
-        Excludes instances that will be predicted
+        ascertains the testing-data split has the appropriate number of instances
 
         :param blob:
         :return:
         """
 
-        return blob.copy()[-self.__arguments.get('testing'):]
+        return blob.copy()[-self.__n_exclude:]
 
     def __persist(self, blob: pd.DataFrame, pathstr: str) -> None:
         """
@@ -68,8 +69,8 @@ class Split:
         frame.sort_values(by='timestamp', ascending=True, inplace=True)
 
         # Split
-        training = self.__include(blob=frame)
-        testing = self.__exclude(blob=frame)
+        training = self.__training(blob=frame)
+        testing = self.__testing(blob=frame)
 
         # Path
         path = os.path.join(self.__configurations.assets_, str(partition.catchment_id), str(partition.ts_id))
