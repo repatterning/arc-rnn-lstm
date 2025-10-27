@@ -1,12 +1,12 @@
-"""Module estimates.py"""
+"""Module artefacts.py"""
 import tensorflow as tf
 
 import pandas as pd
 
 
-class Estimates:
+class Artefacts:
     """
-    Estimates
+    Artefacts
     """
 
     def __init__(self, arguments: dict):
@@ -21,5 +21,3 @@ class Estimates:
 
         history = pd.DataFrame(data=model.history.history)
         history.info()
-
-
