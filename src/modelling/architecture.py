@@ -3,6 +3,9 @@
 import numpy as np
 import tensorflow as tf
 
+import src.modelling.sequencing
+import src.elements.intermediary as itr
+
 
 class Architecture:
     """
@@ -15,10 +18,10 @@ class Architecture:
         :param arguments:
         """
 
-
-        self.__patience = arguments.get('modelling').get('patience')
-        self.__epochs = arguments.get('modelling').get('epochs')
-        self.__batch_size = arguments.get('modelling').get('batch_size')
+        self.__arguments = arguments
+        self.__patience = self.__arguments.get('modelling').get('patience')
+        self.__epochs = self.__arguments.get('modelling').get('epochs')
+        self.__batch_size = self.__arguments.get('modelling').get('batch_size')
 
     def __model(self, x_tr: np.ndarray, y_tr: np.ndarray):
         """
@@ -47,5 +50,14 @@ class Architecture:
 
         return architecture
 
-    def exc(self):
-        pass
+    def exc(self, intermediary: itr.Intermediary):
+        """
+
+        :param intermediary:
+        :return:
+        """
+
+        seq = src.modelling.sequencing.Sequencing(arguments=self.__arguments)
+        x_tr, y_tr = seq.exc(blob=intermediary.training)
+
+        return self.__model(x_tr=x_tr, y_tr=y_tr)
