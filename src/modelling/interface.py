@@ -44,6 +44,7 @@ class Interface:
         return self.__listings.loc[
             self.__listings['ts_id'] == ts_id, 'uri'].to_list()
 
+    # noinspection PyUnresolvedReferences
     def exc(self, partitions: list[pr.Partitions]):
         """
 
