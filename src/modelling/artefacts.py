@@ -1,4 +1,5 @@
 """Module artefacts.py"""
+import logging
 import pandas as pd
 import tensorflow as tf
 
@@ -32,7 +33,10 @@ class Artefacts:
         history = pd.DataFrame(data=model.history.history)
         history.info()
 
-        # Trying
+        # Arguments
+        logging.info(self.__arguments)
+
+        # The training sets
         intermediary.training.info()
         master.training.info()
 
