@@ -61,8 +61,8 @@ class Interface:
             listing = self.__get_listing(ts_id=partition.ts_id)
             data = __data(listing=listing)
             master: mr.Master = __get_splits(data=data, partition=partition)
-            intermediary: itr.Intermediary = __scaling.exc(master=master)
-            model = __architecture.exc(intermediary=intermediary)
+            intermediary: itr.Intermediary = __scaling(master=master)
+            model = __architecture(intermediary=intermediary)
             message = ...
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
