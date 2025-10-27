@@ -65,7 +65,7 @@ class Scaling:
     def exc(self, master: mr.Master) -> mr.Master:
         """
 
-        :param master:
+        :param master: Refer to src.elements.master
         :return:
         """
 
