@@ -1,4 +1,5 @@
 """Module artefacts.py"""
+import logging
 import os
 
 import pandas as pd
@@ -72,7 +73,7 @@ class Artefacts:
 
         return self.__objects.write(nodes=values, path=os.path.join(self.__path, 'scaling.json'))
 
-    def exc(self) -> bool:
+    def exc(self):
         """
 
         :return:
@@ -87,4 +88,4 @@ class Artefacts:
         self.__history()
         self.__scaling()
 
-        return True
+        logging.info('Success: Artefacts of %s', self.__path)
