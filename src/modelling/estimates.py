@@ -4,7 +4,7 @@ import tensorflow as tf
 import src.elements.intermediary as itr
 import src.elements.master as mr
 import src.elements.sequences as sq
-import src.modelling.artefacts
+import src.modelling.valuations
 
 
 class Estimates:
@@ -30,8 +30,6 @@ class Estimates:
         :return:
         """
 
-        src.modelling.artefacts.Artefacts(model=model, scaler=intermediary.scaler, arguments=self.__arguments, path=master.path)
-
-
+        valuations = src.modelling.valuations.Valuations(model=model, scaler=intermediary.scaler, arguments=self.__arguments)
 
         return 'in progress'
