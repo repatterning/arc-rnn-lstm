@@ -3,7 +3,10 @@ import numpy as np
 import tensorflow as tf
 
 import src.elements.intermediary as itr
+import src.elements.master as mr
+import src.elements.sequences as sq
 import src.modelling.sequencing
+import src.modelling.artefacts
 
 
 class Architecture:
@@ -21,6 +24,22 @@ class Architecture:
         self.__patience = self.__arguments.get('modelling').get('patience')
         self.__epochs = self.__arguments.get('modelling').get('epochs')
         self.__batch_size = self.__arguments.get('modelling').get('batch_size')
+
+        # Artefacts
+        self.__artefacts = src.modelling.artefacts.Artefacts(arguments=self.__arguments)
+
+    def __get_sequences(self, intermediary: itr.Intermediary) -> sq.Sequences:
+        """
+
+        :param intermediary:
+        :return:
+        """
+
+        seq = src.modelling.sequencing.Sequencing(arguments=self.__arguments)
+        x_tr, y_tr = seq.exc(blob=intermediary.training)
+        x_te, y_te = seq.exc(blob=intermediary.testing)
+
+        return sq.Sequences(x_tr=x_tr, y_tr=y_tr, x_te=x_te, y_te=y_te)
 
     # noinspection PyUnresolvedReferences
     def __model(self, x_tr: np.ndarray, y_tr: np.ndarray) -> tf.keras.models.Sequential:
@@ -51,14 +70,20 @@ class Architecture:
         return architecture
 
     # noinspection PyUnresolvedReferences
-    def exc(self, intermediary: itr.Intermediary) -> tf.keras.models.Sequential:
+    def exc(self, master: mr.Master, intermediary: itr.Intermediary) -> str:
         """
 
+        :param master:
         :param intermediary:
         :return:
         """
 
-        seq = src.modelling.sequencing.Sequencing(arguments=self.__arguments)
-        x_tr, y_tr = seq.exc(blob=intermediary.training)
+        sequences = self.__get_sequences(intermediary=intermediary)
 
-        return self.__model(x_tr=x_tr, y_tr=y_tr)
+        # Modelling
+        model: tf.keras.models.Sequential = self.__model(x_tr=sequences.x_tr, y_tr=sequences.y_tr)
+
+        # Hence
+        message = self.__artefacts.exc(model=model, sequences=sequences, intermediary=intermediary, master=master)
+
+        return message
