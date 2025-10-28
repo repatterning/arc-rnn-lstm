@@ -31,7 +31,7 @@ class Artefacts:
 
     def __scaling(self):
         """
-        
+
         :return:
         """
 
@@ -45,7 +45,7 @@ class Artefacts:
             'n_samples_seen_': self.__scaler.n_samples_seen_
         }
 
-        self.__objects.write(nodes=values, path=os.path.join(self.__path, 'scaling.json'))
+        return self.__objects.write(nodes=values, path=os.path.join(self.__path, 'scaling.json'))
 
     def __history(self):
         """
