@@ -15,7 +15,8 @@ class Artefacts:
     Artefacts
     """
 
-    def __init__(self, model: tf.keras.models.Sequential, scaler: sklearn.preprocessing.MinMaxScaler, arguments: dict, path: str):
+    def __init__(self, model: tf.keras.models.Sequential, scaler: sklearn.preprocessing.MinMaxScaler,
+                 arguments: dict, path: str):
         """
 
         :param arguments: A set of arguments vis-à-vis calculation & storage objectives.
