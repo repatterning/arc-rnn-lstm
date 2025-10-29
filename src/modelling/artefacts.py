@@ -73,7 +73,7 @@ class Artefacts:
 
         return self.__objects.write(nodes=values, path=os.path.join(self.__path, 'scaling.json'))
 
-    def exc(self):
+    def exc(self) -> None:
         """
 
         :return:
@@ -88,4 +88,4 @@ class Artefacts:
         self.__history()
         self.__scaling()
 
-        logging.info('Success: Artefacts of %s', self.__path)
+        logging.info('%s artefacts: succeeded', os.path.basename(self.__path))
