@@ -58,8 +58,8 @@ if __name__ == '__main__':
     import src.functions.cache
     import src.modelling.interface
     import src.preface.interface
-    import src.transfer.interface
     import src.specific
+    import src.transfer.interface
 
     specific = src.specific.Specific()
     parser = argparse.ArgumentParser()
