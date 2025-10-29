@@ -70,7 +70,6 @@ class Architecture:
 
         return architecture
 
-    # noinspection PyUnresolvedReferences
     def exc(self, master: mr.Master, intermediary: itr.Intermediary) -> str:
         """
 
