@@ -29,7 +29,7 @@ class Valuations:
         self.__features = self.__arguments.get('scaling').get('features')
 
         # Modelling Arguments
-        self.__fields, self.__targets, self.__disjoint = self.__get_modelling_arguments()
+        _, self.__targets, self.__disjoint = self.__get_modelling_arguments()
 
         # Renaming
         self.__rename = { arg: f'e_{arg}' for arg in self.__targets}
