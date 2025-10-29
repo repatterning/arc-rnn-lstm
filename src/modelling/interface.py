@@ -8,7 +8,6 @@ import src.elements.intermediary as itr
 import src.elements.master as mr
 import src.elements.partitions as pr
 import src.modelling.architecture
-import src.modelling.artefacts
 import src.modelling.data
 import src.modelling.scaling
 import src.modelling.split
@@ -34,7 +33,6 @@ class Interface:
         # Instances
         self.__scaling = dask.delayed(src.modelling.scaling.Scaling(arguments=self.__arguments).exc)
         self.__architecture = dask.delayed(src.modelling.architecture.Architecture(arguments=self.__arguments).exc)
-        self.__artefacts = dask.delayed(src.modelling.artefacts.Artefacts(arguments=self.__arguments).exc)
 
     @dask.delayed
     def __get_listing(self, ts_id: int) -> list[str]:
