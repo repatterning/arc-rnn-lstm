@@ -7,6 +7,7 @@ import src.elements.master as mr
 import src.elements.sequences as sq
 import src.modelling.artefacts
 import src.modelling.sequencing
+import src.modelling.estimates
 
 
 class Architecture:
@@ -24,6 +25,9 @@ class Architecture:
         self.__patience = self.__arguments.get('modelling').get('patience')
         self.__epochs = self.__arguments.get('modelling').get('epochs')
         self.__batch_size = self.__arguments.get('modelling').get('batch_size')
+
+        # Estimates
+        self.__estimates = src.modelling.estimates.Estimates(arguments=self.__arguments)
 
     def __get_sequences(self, intermediary: itr.Intermediary) -> sq.Sequences:
         """
@@ -83,5 +87,7 @@ class Architecture:
         # Hence
         src.modelling.artefacts.Artefacts(
             model=model, scaler=intermediary.scaler, arguments=self.__arguments, path=master.path).exc()
+        self.__estimates.exc(
+            model=model, sequences=sequences, intermediary=intermediary, master=master)
 
-        return ''
+        return '/'.join(master.path.rsplit(sep='/', maxsplit=2)[-2:])
