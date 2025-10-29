@@ -25,8 +25,9 @@ class Config:
         '''
         Keys
         '''
+        self.architecture = 'arc-rnn-lstm'
         self.s3_parameters_key = 's3_parameters.yaml'
-        self.arguments_key = 'artefacts/architecture/arc-rnn-lstm/arguments.json'
+        self.arguments_key = f'artefacts/architecture/{self.architecture}/arguments.json'
         self.metadata = 'artefacts/metadata.json'
 
         '''
@@ -38,7 +39,7 @@ class Config:
         '''
         Local Paths
         '''
-        sections = ['assets', 'arc-rnn-lstm']
+        sections = ['assets', self.architecture]
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
         self.assets_ = os.path.join(self.warehouse, *sections)
 
