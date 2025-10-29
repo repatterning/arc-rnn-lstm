@@ -22,7 +22,6 @@ class Config:
 
         """
 
-
         '''
         Keys
         '''
@@ -30,6 +29,11 @@ class Config:
         self.arguments_key = 'artefacts/architecture/arc-rnn-lstm/arguments.json'
         self.metadata = 'artefacts/metadata.json'
 
+        '''
+        Project Metadata
+        '''
+        self.project_tag = 'hydrography'
+        self.project_key_name = 'HydrographyProject'
 
         '''
         Local Paths
