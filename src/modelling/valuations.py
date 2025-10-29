@@ -1,4 +1,5 @@
 """Module valuations.py"""
+import logging
 import numpy as np
 import pandas as pd
 import sklearn
@@ -72,6 +73,9 @@ class Valuations:
         :return:
         """
 
+        logging.info('x_matrix shape: %s', x_matrix.shape)
+
+        # Predict
         predictions: np.ndarray = self.__model.predict(x=x_matrix)
 
         # Points
