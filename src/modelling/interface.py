@@ -30,10 +30,6 @@ class Interface:
         self.__listings = listings
         self.__arguments = arguments
 
-        # Instances
-        self.__scaling = dask.delayed(src.modelling.scaling.Scaling(arguments=self.__arguments).exc)
-        self.__architecture = dask.delayed(src.modelling.architecture.Architecture(arguments=self.__arguments).exc)
-
     @dask.delayed
     def __get_listing(self, ts_id: int) -> list[str]:
         """
@@ -56,6 +52,8 @@ class Interface:
         # Delayed Functions
         __data = dask.delayed(src.modelling.data.Data(arguments=self.__arguments).exc)
         __get_splits = dask.delayed(src.modelling.split.Split(arguments=self.__arguments).exc)
+        __scaling = dask.delayed(src.modelling.scaling.Scaling(arguments=self.__arguments).exc)
+        __architecture = dask.delayed(src.modelling.architecture.Architecture(arguments=self.__arguments).exc)
 
         # Compute
         computations = []
@@ -63,8 +61,8 @@ class Interface:
             listing = self.__get_listing(ts_id=partition.ts_id)
             data = __data(listing=listing)
             master: mr.Master = __get_splits(data=data, partition=partition)
-            intermediary: itr.Intermediary = self.__scaling(master=master)
-            message = self.__architecture(intermediary=intermediary)
+            intermediary: itr.Intermediary = __scaling(master=master)
+            message = __architecture(master=master, intermediary=intermediary)
             computations.append(message)
         messages = dask.compute(computations, scheduler='threads')[0]
 
