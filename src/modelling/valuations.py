@@ -1,14 +1,13 @@
-"""Module valuations.py"""
+
+import tensorflow as tf
+
 import numpy as np
 import pandas as pd
 import sklearn
-import tensorflow as tf
+
 
 
 class Valuations:
-    """
-    Valuations
-    """
 
     def __init__(self, model: tf.keras.src.models.Sequential, scaler: sklearn.preprocessing.MinMaxScaler, arguments: dict):
         """
@@ -38,7 +37,6 @@ class Valuations:
         """
 
         elements: dict = self.__arguments.get('modelling')
-
         fields: list = elements.get('fields')
         targets: list = elements.get('targets')
 
@@ -47,7 +45,7 @@ class Valuations:
 
         return fields, targets, disjoint
 
-    def __get_design(self, structure: pd.DataFrame) -> pd.DataFrame:
+    def __reconfigure(self, structure: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param structure:
@@ -62,11 +60,12 @@ class Valuations:
 
         return frame
 
-    def exc(self, x_matrix: np.ndarray, original: pd.DataFrame):
+    def exc(self, x_matrix: np.ndarray, design: pd.DataFrame, original: pd.DataFrame) -> pd.DataFrame:
         """
 
-        :param x_matrix:
-        :param original:
+        :param x_matrix: A matrix of sequences
+        :param design: Where applicable, the feature fields are scaled
+        :param original: cf. design, the feature
         :return:
         """
 
@@ -76,13 +75,16 @@ class Valuations:
         n_points = x_matrix.shape[0]
 
         # The expected inverse transform structure
-        structure = pd.DataFrame(data=x_matrix, columns=self.__features)
+        structure = design.copy()[self.__disjoint][-n_points:]
         structure.loc[:, self.__targets] = predictions
+        structure = structure.copy()[self.__features]
 
-        # Re-scaled values
-        design = self.__get_design(structure=structure)
-
+        # Reconfiguring
+        frame = self.__reconfigure(structure=structure)
 
         # Original & Estimates
         __original = original[-n_points:]
-        instances = __original.copy().merge(design[list(self.__rename.values())], how='inner', on='timestamp')
+        instances = pd.concat([__original.copy().reset_index(drop=True), frame[list(self.__rename.values())]],
+                              axis=1)
+
+        return instances
