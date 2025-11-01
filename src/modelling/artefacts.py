@@ -8,6 +8,7 @@ import tensorflow as tf
 
 import src.functions.objects
 import src.functions.streams
+import src.modelling.timings
 
 
 class Artefacts:
@@ -27,6 +28,9 @@ class Artefacts:
         self.__arguments = arguments
         self.__path = path
 
+        # Times
+        self.__starting = src.modelling.timings.Timings(arguments=self.__arguments).starting()
+
         # Instances
         self.__streams = src.functions.streams.Streams()
         self.__objects = src.functions.objects.Objects()
@@ -41,8 +45,13 @@ class Artefacts:
 
         values = {
             'fields': elements.get('fields'), 'targets': elements.get('targets'),
+            'n_sequence': self.__arguments.get('n_sequence'),
             'epochs': self.__model.history.params.get('epochs'),
-            'batch_size': elements.get('batch_size')
+            'batch_size': elements.get('batch_size'),
+            'training_starts': {
+                'epoch_milliseconds': self.__starting.epoch_milliseconds,
+                'string': self.__starting.string
+            }
         }
 
         return self.__objects.write(nodes=values, path=os.path.join(self.__path, 'modelling.json'))
