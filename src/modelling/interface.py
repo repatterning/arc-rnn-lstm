@@ -64,6 +64,6 @@ class Interface:
             intermediary: itr.Intermediary = __scaling(master=master)
             message = __architecture(master=master, intermediary=intermediary)
             computations.append(message)
-        messages = dask.compute(computations, scheduler='threads')[0]
+        messages = dask.compute(computations, scheduler='processes')[0]
 
         logging.info(messages)
