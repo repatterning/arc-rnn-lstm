@@ -9,14 +9,8 @@ Develop<br>
 <br>
 <br>
 
-<table style="width: 80%; margin-left: 1.25rem; margin-right: auto; margin-top: 35px;">
-  <colgroup>
-    <col span="1" style="width: 21.5%;">
-    <col span="1" style="width: 47.5%;">
-  </colgroup>
-  <tr style="vertical-align: top"><td><b>FUNCTION</b></td><td>Develops river level forecasting models, per gauge <br>area, via river level gauge measures across <br>Scotland.</td></tr>
-  <tr style="vertical-align: top"><td><b>UNDERLYING<br>ALGORITHM</b></td><td>Long Short-Term Memory Recurrent Neural</td></tr>
-</table>
+* <b>Function</b>: Develops river level forecasting models, per gauge area, via river level gauge measures across Scotland.
+* <b>Underlying Algorithm</b>: Long Short-Term Memory Recurrent Neural
 
 <br>
 <br>
