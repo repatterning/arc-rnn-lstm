@@ -64,7 +64,7 @@ if __name__ == '__main__':
     specific = src.specific.Specific()
     parser = argparse.ArgumentParser()
     parser.add_argument('--codes', type=specific.codes,
-                        help='Expects a string of one or more comma separated gauge time series codes.')
+                        help='Expects a string of one or more comma separated catchment identification codes.')
     args = parser.parse_args()
 
     connector: boto3.session.Session
