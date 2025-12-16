@@ -64,7 +64,7 @@ class Cloud:
         bucket = src.s3.bucket.Bucket(service=self.__service, location_constraint=self.__s3_parameters.location_constraint,
                                       bucket_name=self.__bucket_name)
 
-        # Strategy Switch: If the bucket exist, do not clear the target prefix, overwrite files instead.
+        # If the bucket exist, clear prefix items.
         if bucket.exists():
             return self.__clear_prefix()
 
