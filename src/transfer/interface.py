@@ -8,7 +8,6 @@ import config
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.s3.ingress
-import src.transfer.cloud
 import src.transfer.dictionary
 import src.transfer.metadata
 
@@ -51,12 +50,12 @@ class Interface:
 
     def exc(self):
         """
+        In aid of distributed model development, a separate state machine will delete the models/artefacts that
+        this package delivers to a temporary vault; if there are any artefacts therein.  Hence, src.transfer.cloud
+        is unnecessary herein.
 
         :return:
         """
-
-        # Prepare
-        src.transfer.cloud.Cloud(service=self.__service, s3_parameters=self.__s3_parameters).exc()
 
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings: pd.DataFrame = src.transfer.dictionary.Dictionary().exc(
