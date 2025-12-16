@@ -8,6 +8,7 @@ import src.elements.sequences as sq
 import src.modelling.artefacts
 import src.modelling.estimates
 import src.modelling.sequencing
+import src.modelling.scaling
 
 
 class Architecture:
@@ -26,8 +27,9 @@ class Architecture:
         self.__epochs = self.__arguments.get('modelling').get('epochs')
         self.__batch_size = self.__arguments.get('modelling').get('batch_size')
 
-        # Estimates
+        # Instances
         self.__estimates = src.modelling.estimates.Estimates(arguments=self.__arguments)
+        self.__scaling = src.modelling.scaling.Scaling(arguments=arguments)
 
     def __get_sequences(self, intermediary: itr.Intermediary) -> sq.Sequences:
         """
@@ -70,14 +72,17 @@ class Architecture:
 
         return architecture
 
-    def exc(self, master: mr.Master, intermediary: itr.Intermediary) -> str:
+    def exc(self, master: mr.Master) -> str:
         """
 
         :param master:
-        :param intermediary:
         :return:
         """
 
+        # scaling
+        intermediary: itr.Intermediary = self.__scaling.exc(master=master)
+
+        # get sequential structure
         sequences = self.__get_sequences(intermediary=intermediary)
 
         # Modelling
