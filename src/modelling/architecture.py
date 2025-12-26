@@ -56,8 +56,7 @@ class Architecture:
 
         architecture = tf.keras.models.Sequential()
         architecture.add(tf.keras.layers.Input(shape=(x_tr.shape[1], x_tr.shape[2])))
-        architecture.add(tf.keras.layers.LSTM(units=units, return_sequences=True))
-        architecture.add(tf.keras.layers.LSTM(units=64, return_sequences=False))
+        architecture.add(tf.keras.layers.LSTM(units=units, return_sequences=False))
         architecture.add(tf.keras.layers.Dense(units=1))
 
         # loss w.r.t. training data
