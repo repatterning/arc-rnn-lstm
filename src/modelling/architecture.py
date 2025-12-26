@@ -91,9 +91,9 @@ class Architecture:
         j = -1
         model = None
         hyperparameters = {}
-        for units in self.__arguments.get('units'):
+        for units in self.__arguments.get('modelling').get('units'):
 
-            for batch_size in self.__arguments.get('batch_size'):
+            for batch_size in self.__arguments.get('modelling').get('batch_size'):
 
                 j = j + 1
 
