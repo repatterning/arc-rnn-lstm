@@ -73,6 +73,7 @@ class Architecture:
 
         return architecture
 
+    # pylint: disable=R0915
     def exc(self, master: mr.Master) -> str:
         """
 
