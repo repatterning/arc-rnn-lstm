@@ -25,7 +25,6 @@ class Architecture:
         self.__arguments = arguments
         self.__patience = self.__arguments.get('modelling').get('patience')
         self.__epochs = self.__arguments.get('modelling').get('epochs')
-        self.__batch_size = self.__arguments.get('modelling').get('batch_size')
 
         # Instances
         self.__estimates = src.modelling.estimates.Estimates(arguments=self.__arguments)
@@ -45,17 +44,19 @@ class Architecture:
         return sq.Sequences(x_tr=x_tr, y_tr=y_tr, x_te=x_te, y_te=y_te)
 
     # noinspection PyUnresolvedReferences
-    def __model(self, x_tr: np.ndarray, y_tr: np.ndarray) -> tf.keras.models.Sequential:
+    def __model(self, x_tr: np.ndarray, y_tr: np.ndarray, units: int, batch_size: int) -> tf.keras.models.Sequential:
         """
 
         :param x_tr:
         :param y_tr:
+        :param units:
+        :param batch_size:
         :return:
         """
 
         architecture = tf.keras.models.Sequential()
         architecture.add(tf.keras.layers.Input(shape=(x_tr.shape[1], x_tr.shape[2])))
-        architecture.add(tf.keras.layers.LSTM(units=128, return_sequences=True))
+        architecture.add(tf.keras.layers.LSTM(units=units, return_sequences=True))
         architecture.add(tf.keras.layers.LSTM(units=64, return_sequences=False))
         architecture.add(tf.keras.layers.Dense(units=1))
 
@@ -68,7 +69,7 @@ class Architecture:
             metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
         architecture.fit(
-            x=x_tr, y=y_tr, epochs=self.__epochs, batch_size=self.__batch_size, callbacks=[early_stopping])
+            x=x_tr, y=y_tr, epochs=self.__epochs, batch_size=batch_size, callbacks=[early_stopping])
 
         return architecture
 
@@ -86,11 +87,33 @@ class Architecture:
         sequences = self.__get_sequences(intermediary=intermediary)
 
         # Modelling
-        model: tf.keras.models.Sequential = self.__model(x_tr=sequences.x_tr, y_tr=sequences.y_tr)
+        j = -1
+        model = None
+        hyperparameters = {}
+        for units in self.__arguments.get('units'):
+
+            for batch_size in self.__arguments.get('batch_size'):
+
+                j = j + 1
+
+                cell: tf.keras.models.Sequential = self.__model(
+                    x_tr=sequences.x_tr, y_tr=sequences.y_tr, units=units, batch_size=batch_size)
+                latest = min(cell.history.history['loss'])
+
+                if j == 0:
+                    model = cell
+                    hyperparameters = {'units': units, 'batch_size': batch_size}
+                    continue
+
+                previous = min(model.history.history['loss'])
+                if latest < previous:
+                    model = cell
+                    hyperparameters = {'units': units, 'batch_size': batch_size}
 
         # Hence
         src.modelling.artefacts.Artefacts(
-            model=model, scaler=intermediary.scaler, arguments=self.__arguments, path=master.path).exc()
+            model=model, scaler=intermediary.scaler, arguments=self.__arguments, path=master.path).exc(
+            hyperparameters=hyperparameters)
         self.__estimates.exc(
             model=model, sequences=sequences, intermediary=intermediary, master=master)
 
