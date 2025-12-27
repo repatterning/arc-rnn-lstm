@@ -75,7 +75,7 @@ class Split:
         testing = self.__testing(blob=frame)
 
         # Path
-        path = os.path.join(self.__configurations.assets_, str(partition.catchment_id), str(partition.ts_id))
+        path = os.path.join(self.__configurations.pathway_, str(partition.catchment_id), str(partition.ts_id))
         self.__directories.create(path=path)
 
         # Persist
