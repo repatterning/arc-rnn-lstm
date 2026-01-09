@@ -61,7 +61,8 @@ class Architecture:
 
         # loss w.r.t. training data
         early_stopping = tf.keras.callbacks.EarlyStopping(
-            monitor='loss', patience=self.__patience, mode='min')
+            monitor='loss', patience=self.__patience, mode='min',
+            min_delta=self.__arguments.get('modelling').get('min_delta'))
 
         architecture.compile(
             loss=tf.keras.losses.MeanSquaredError(), optimizer=tf.keras.optimizers.Adam(),
