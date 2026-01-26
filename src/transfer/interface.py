@@ -63,14 +63,13 @@ class Interface:
         # The strings for transferring data to Amazon S3 (Simple Storage Service)
         strings: pd.DataFrame = src.transfer.dictionary.Dictionary().exc(
             path=self.__configurations.pathway_, extension='*',
-            prefix=self.__arguments.get('prefix').get('destination') + '/')
+            prefix=self.__arguments.get('modelling').get('path').get('initial') + '/')
 
         # Transfer
         if strings.empty:
             logging.info('Empty')
         else:
             strings = self.__set_metadata(frame=strings.copy())
-            logging.info(strings)
 
             messages = src.s3.ingress.Ingress(
                 service=self.__service, bucket_name=self.__s3_parameters.internal).exc(

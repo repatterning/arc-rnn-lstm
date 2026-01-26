@@ -32,9 +32,7 @@ class Interface:
         """
 
         key_name = self.__configurations.arguments_key
-
         arguments: dict = src.s3.configurations.Configurations(connector=connector).objects(key_name=key_name)
-        arguments['prefix'] = arguments.get('modelling').get('inspect')
 
         return arguments
 

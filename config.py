@@ -45,4 +45,4 @@ class Config:
         Local Paths
         '''
         self.warehouse: str = os.path.join(os.getcwd(), 'warehouse')
-        self.pathway_ = os.path.join(self.warehouse, 'arc-rnn-lstm')
+        self.pathway_ = self.warehouse
