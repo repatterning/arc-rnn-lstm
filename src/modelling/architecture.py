@@ -59,9 +59,9 @@ class Architecture:
         architecture.add(tf.keras.layers.LSTM(units=units, return_sequences=False))
         architecture.add(tf.keras.layers.Dense(units=1))
 
-        # loss w.r.t. training data
+        # error w.r.t. training data
         early_stopping = tf.keras.callbacks.EarlyStopping(
-            monitor='loss', patience=self.__patience, mode='min',
+            monitor=self.__arguments.get('modelling').get('monitor'), patience=self.__patience, mode='min',
             min_delta=self.__arguments.get('modelling').get('min_delta'))
 
         architecture.compile(
@@ -97,6 +97,7 @@ class Architecture:
 
                 j = j + 1
 
+                # noinspection PyUnresolvedReferences
                 cell: tf.keras.models.Sequential = self.__model(
                     x_tr=sequences.x_tr, y_tr=sequences.y_tr, units=units, batch_size=batch_size)
                 latest = min(cell.history.history['loss'])
